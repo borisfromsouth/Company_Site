@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // добавляем сервисы
 builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
+builder.Services.AddControllersWithViews().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
 
 var app = builder.Build();
 
@@ -12,14 +14,14 @@ if (!app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseStaticFiles();
-
 app.UseRouting();
 
-app.UseEndpoints(endpoints => 
-{ 
-    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/");
-}): 
+app.UseStaticFiles();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute("default", "{controller=HomeController}/{action=Index}/{id?}"); // Home и Index явл дефолтными настройками если ниго нету (напр. sitr.com/)
+});
 //app.UseAuthorization();
 
 app.MapRazorPages();
